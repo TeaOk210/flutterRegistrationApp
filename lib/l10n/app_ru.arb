@@ -31,7 +31,7 @@
     "@google" : {
         "description" : "используя гугл"
     },
-    "email" : "Ваша почта",
+    "email" : "Ваша почта ",
     "@email" : {
         "description" : "состояние почты"
     },

@@ -69,6 +69,12 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: const [
+          LanguageMenu()
+        ],
+        automaticallyImplyLeading: false,
+      ),
       resizeToAvoidBottomInset: false,
       body: Center(
         child: Column(

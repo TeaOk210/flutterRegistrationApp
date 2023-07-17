@@ -86,6 +86,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         actions: const [
           LanguageMenu()
         ],
+        automaticallyImplyLeading: false,
       ),
       resizeToAvoidBottomInset: false,
       body: Center(
