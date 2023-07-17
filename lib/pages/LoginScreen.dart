@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reg/pages/RegistrationScreen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../main.dart';
 import '../utils/AuthRepository.dart';
@@ -74,11 +75,11 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Padding(
-                padding: EdgeInsets.only(top: 50),
-                child: Text("Вход",
+            Padding(
+                padding: const EdgeInsets.only(top: 50),
+                child: Text(AppLocalizations.of(context)!.ent,
                     textDirection: TextDirection.ltr,
-                    style: TextStyle(fontSize: 50))),
+                    style: const TextStyle(fontSize: 50))),
             InputField(
                 icon: Icons.email,
                 title: "Email",
@@ -92,12 +93,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 onTextChanged: _updatePassword,
                 state: _updatePasswordState),
             ContinueButton(
-              title: "Войти",
+              title: AppLocalizations.of(context)!.entBtn,
               state: emailState && passwordState,
               callback: _onClick,
             ),
-            const SignBlock(
-                title: "Или зарегистрироваться", screen: RegistrationScreen()),
+            SignBlock(
+                title: AppLocalizations.of(context)!.orReg, screen: const RegistrationScreen()),
             const GoogleButton()
           ],
         ),

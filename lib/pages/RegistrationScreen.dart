@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reg/pages/LoginScreen.dart';
 import 'package:flutter_reg/pages/ProfileScreen.dart';
 import 'package:flutter_reg/utils/AuthRepository.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../main.dart';
 
@@ -81,17 +82,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: const [
+          LanguageMenu()
+        ],
+      ),
       resizeToAvoidBottomInset: false,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Padding(
-                padding: EdgeInsets.only(top: 50),
-                child: Text("Регистрация",
+            Padding(
+                padding: const EdgeInsets.only(top: 50),
+                // child: Text("Регистрация",
+                child: Text(AppLocalizations.of(context)!.reg,
                     textDirection: TextDirection.ltr,
-                    style: TextStyle(fontSize: 50))),
+                    style: const TextStyle(fontSize: 50))),
             InputField(
                 icon: Icons.email,
                 title: "Email",
@@ -111,11 +118,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 onTextChanged: _updatePassword,
                 state: _updatePasswordState),
             ContinueButton(
-              title: "Зарегистрироваться",
+              title: AppLocalizations.of(context)!.regBtn,
               state: emailState && passwordState,
               callback: _onClick,
             ),
-            const SignBlock(title: "Или войти", screen: LoginScreen()),
+            SignBlock(title: AppLocalizations.of(context)!.orEnt, screen: const LoginScreen()),
             const GoogleButton()
           ],
         ),

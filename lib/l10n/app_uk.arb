@@ -1,0 +1,66 @@
+{
+    "language" : "Украинский",
+    "@language" : {
+    "description" : "Выбранный язык"
+    },
+    "reg" : "Хрю Хрю Хрю",
+    "@Reg" : {
+        "description" : "Имя экрана"
+    },
+    "ent" : "Хрю Хрю",
+    "@Ent" : {
+        "description" : "Имя экрана"
+    },
+    "regBtn" : "ХРЮ ХРЮ ХРЮ",
+    "@RegBtn" : {
+        "description" : "имя кнопки"
+    },
+    "entBtn" : "ХРЮ ХРЮ",
+    "@EntBtn" : {
+        "description" : "Имя кнопки"
+    },
+    "orEnt" : "или ХРЮ ХРЮ",
+    "@orEnt" : {
+        "description" : "Имя выбора"
+    },
+    "orReg" : "или ХРЮ ХРЮ ХРЮ",
+    "@orReg" : {
+        "description" : "Имя выбора"
+    },
+    "google" : "ХРЮ ХРЮ?",
+    "@google" : {
+        "description" : "используя гугл"
+    },
+    "email" : "ХРХРЮРХРХРЮ ХРЮ",
+    "@email" : {
+        "description" : "состояние почты"
+    },
+    "emaisStateTrue" : "ХРЮ",
+    "@emaisStateTrue" : {
+        "description" : "почта подтверждена"
+    },
+    "emailStateFalse" : "не Хрю",
+    "@emailStateFalse" : {
+        "description" : "почта не подтверждена"
+    },
+    "reportEmail" : "Хрю хрю",
+    "@reportEmail" : {
+        "description" : "подтверждение почты"
+    },
+    "signOut" : "Выйти из Хрю",
+    "@signOut" : {
+        "description" : "выход из аккаунта"
+    },
+    "emailReport" : "Некорректный формат Хрю",
+    "@emailReport" : {
+        "description" : "ошибка поля почты"
+    },
+    "passwordReport" : "Хрю должен содержать цифры и буквы, и быть не менее 8 символов",
+    "@passwordReport" : {
+        "description" : "ошибка поля пароля"
+    },
+    "usernameReport" : "Поле не должно быть Хрю!",
+    "@usernameReport" : {
+        "description" : "ошибка поля имени"
+    }
+    }

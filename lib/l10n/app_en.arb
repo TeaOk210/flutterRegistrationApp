@@ -1,0 +1,66 @@
+{
+    "language" : "English",
+    "@language" : {
+    "description" : "The current language"
+    },
+    "reg" : "Registration",
+    "@Reg" : {
+        "description" : "screen name"
+    },
+    "ent" : "Entry",
+    "@Ent" : {
+        "description" : "screen name"
+    },
+    "regBtn" : "sign up",
+    "@RegBtn" : {
+        "description" : "button name"
+    },
+    "entBtn" : "log in",
+    "@EntBtn" : {
+        "description" : "button name"
+    },
+    "orEnt" : "or log in",
+    "@orEnt" : {
+        "description" : "selection name"
+    },
+    "orReg" : "or sign up",
+    "@orReg" : {
+        "description" : "selection name"
+    },
+    "google" : "Using google",
+    "@google" : {
+        "description" : "Using google"
+    },
+    "email" : "Your mail is ",
+    "@email" : {
+        "description" : "email state"
+    },
+    "emaisStateTrue" : "confirmed",
+    "@emaisStateTrue" : {
+        "description" : "email confirmed"
+    },
+    "emailStateFalse" : "not confirmed",
+    "@emailStateFalse" : {
+        "description" : "email not confirmed"
+    },
+    "reportEmail" : "Confirm mail",
+    "@reportEmail" : {
+        "description" : "Confirm mail"
+    },
+    "signOut" : "Log out of account",
+    "@signOut" : {
+        "description" : "log out"
+    },
+    "emailReport" : "Incorrect email format",
+    "@emailReport" : {
+        "description" : "mail field error"
+    },
+    "passwordReport" : "The password must contain numbers and letters, and be at least 8 characters",
+    "@passwordReport" : {
+        "description" : "password field error"
+    },
+    "usernameReport" : "The field should not be empty!",
+    "@usernameReport" : {
+        "description" : "name field error"
+    }
+    }

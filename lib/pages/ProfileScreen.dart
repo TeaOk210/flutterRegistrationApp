@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reg/pages/RegistrationScreen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -32,9 +33,9 @@ class _PersonInfoState extends State<PersonInfo> {
 
   String emailVerified() {
     if (emailState) {
-      return "зарегистрирована";
+      return AppLocalizations.of(context)!.emaisStateTrue;
     } else {
-      return "не зарегистрирована";
+      return AppLocalizations.of(context)!.emailStateFalse;
     }
   }
 
@@ -92,7 +93,7 @@ class _PersonInfoState extends State<PersonInfo> {
               style: const TextStyle(fontSize: 20)),
           RichText(
               text: TextSpan(
-                  text: "Ваша почта ",
+                  text: AppLocalizations.of(context)!.email,
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                   children: [
                 TextSpan(
@@ -105,16 +106,16 @@ class _PersonInfoState extends State<PersonInfo> {
                   onPressed: onClick,
                   style: ButtonStyle(
                       backgroundColor: MaterialStatePropertyAll(buttonColor())),
-                  child: const Text("Подтвердить почту",
-                      style: TextStyle(fontSize: 15, color: Colors.white)))),
+                  child: Text(AppLocalizations.of(context)!.reportEmail,
+                      style: const TextStyle(fontSize: 15, color: Colors.white)))),
           Padding(
               padding: const EdgeInsets.only(top: 10),
               child: ElevatedButton(
                   onPressed: onExit,
                   style: const ButtonStyle(
                       backgroundColor: MaterialStatePropertyAll(Colors.cyan)),
-                  child: const Text("Выйти из аккаунта",
-                      style: TextStyle(fontSize: 15, color: Colors.white))))
+                  child: Text(AppLocalizations.of(context)!.signOut,
+                      style: const TextStyle(fontSize: 15, color: Colors.white))))
         ],
       ),
     );

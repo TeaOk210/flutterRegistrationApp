@@ -1,0 +1,66 @@
+{
+    "language" : "Русский",
+    "@language" : {
+    "description" : "Выбранный язык"
+    },
+    "reg" : "Регистрация",
+    "@Reg" : {
+        "description" : "Имя экрана"
+    },
+    "ent" : "Вход",
+    "@Ent" : {
+        "description" : "Имя экрана"
+    },
+    "regBtn" : "зарегистрироваться",
+    "@RegBtn" : {
+        "description" : "имя кнопки"
+    },
+    "entBtn" : "войти",
+    "@EntBtn" : {
+        "description" : "Имя кнопки"
+    },
+    "orEnt" : "или войти",
+    "@orEnt" : {
+        "description" : "Имя выбора"
+    },
+    "orReg" : "или зарегистрироваться",
+    "@orReg" : {
+        "description" : "Имя выбора"
+    },
+    "google" : "С помощью google",
+    "@google" : {
+        "description" : "используя гугл"
+    },
+    "email" : "Ваша почта",
+    "@email" : {
+        "description" : "состояние почты"
+    },
+    "emaisStateTrue" : "подтверждена",
+    "@emaisStateTrue" : {
+        "description" : "почта подтверждена"
+    },
+    "emailStateFalse" : "не подтверждена",
+    "@emailStateFalse" : {
+        "description" : "почта не подтверждена"
+    },
+    "reportEmail" : "Подтвердить почту",
+    "@reportEmail" : {
+        "description" : "подтверждение почты"
+    },
+    "signOut" : "Выйти из аккауниа",
+    "@signOut" : {
+        "description" : "выход из аккаунта"
+    },
+    "emailReport" : "Некорректный формат email",
+    "@emailReport" : {
+        "description" : "ошибка поля почты"
+    },
+    "passwordReport" : "Пароль должен содержать цифры и буквы, и быть не менее 8 символов",
+    "@passwordReport" : {
+        "description" : "ошибка поля пароля"
+    },
+    "usernameReport" : "Поле не должно быть пустым!",
+    "@usernameReport" : {
+        "description" : "ошибка поля имени"
+    }
+    }

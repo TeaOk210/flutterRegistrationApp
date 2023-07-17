@@ -1,13 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_reg/pages/ProfileScreen.dart';
 import 'package:flutter_reg/pages/RegistrationScreen.dart';
 import 'package:flutter_reg/utils/AuthRepository.dart';
+import 'package:flutter_reg/utils/LocaleProvider.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
+import 'l10n/l10n.dart';
 
-void main() async{
+void main() async {
   runApp(const MyApp());
 
   await Firebase.initializeApp(
@@ -19,15 +25,56 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+      create: (context) => LocaleProvirer(),
+      builder: (context, child) {
+        final provider = Provider.of<LocaleProvirer>(context);
+
+        return MaterialApp(
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              focusColor: Colors.grey,
+              useMaterial3: true,
+            ),
+            home: const RegistrationScreen(),
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: L10n.all,
+        locale: provider.locale,);
+      });
+}
+
+class LanguageMenu extends StatelessWidget {
+  const LanguageMenu({super.key});
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        focusColor: Colors.grey,
-        useMaterial3: true,
-      ),
-      home: const RegistrationScreen(),
-      debugShowCheckedModeBanner: false,
+    final provider = Provider.of<LocaleProvirer>(context);
+    provider.setLocale(Localizations.localeOf(context));
+
+    return PopupMenuButton<Locale>(
+      icon: const Icon(Icons.more_vert),
+      onSelected: (Locale locale) {
+        provider.setLocale(locale);
+      },
+      itemBuilder: (BuildContext context) {
+        return L10n.all.map((Locale locale) {
+          return PopupMenuItem<Locale>(
+            value: locale,
+            child: Text(
+              _getLanguageName(locale),
+              style: TextStyle(
+                color: locale == provider.locale ? Colors.blue : null,
+              ),
+            ),
+          );
+        }).toList();
+      },
     );
   }
 }
@@ -56,11 +103,11 @@ class InputField extends StatefulWidget {
 class _InputFieldState extends State<InputField> {
   String input = "";
 
-  _changeInput(String text) {
+  void _changeInput(String? text) {
     setState(() {
-      input = text;
+      input = text!;
     });
-    widget.onTextChanged(text);
+    widget.onTextChanged(text!);
 
     if (widget.title == "Email") {
       widget.state(isValidEmail(input));
@@ -71,15 +118,17 @@ class _InputFieldState extends State<InputField> {
     }
   }
 
-  String? _getHelper() {
-    if (widget.title == "Email" && input.isNotEmpty) {
-      return isValidEmail(input) ? null : "Некорректный формат email";
-    } else if (widget.title == "Password" && input.isNotEmpty) {
-      return isValidPassword(input)
+  String? _getHelper(String? text) {
+    if (widget.title == "Email" && text != null) {
+      return isValidEmail(text)
           ? null
-          : "Пароль должен содержать цифры и буквы, и быть не менее 8 символов";
-    } else if (widget.title == "Username" && input.isEmpty) {
-      return "Поле не должно быть пустым!";
+          : AppLocalizations.of(context)!.emailReport;
+    } else if (widget.title == "Password" && text != null) {
+      return isValidPassword(text)
+          ? null
+          : AppLocalizations.of(context)!.passwordReport;
+    } else if (widget.title == "Username" && text == null) {
+      return AppLocalizations.of(context)!.usernameReport;
     }
     return null;
   }
@@ -89,27 +138,25 @@ class _InputFieldState extends State<InputField> {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.9,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 15),
-        child: TextField(
-            decoration: InputDecoration(
-                labelText: widget.title,
-                labelStyle: const TextStyle(fontSize: 24, color: Colors.grey),
-                helperText: _getHelper(),
-                helperStyle: const TextStyle(fontSize: 13, color: Colors.red),
-                helperMaxLines: 2,
-                prefixIcon: Icon(widget.icon),
-                border: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black12),
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey, width: 3),
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)))),
-            textDirection: TextDirection.ltr,
-            style: const TextStyle(fontSize: 24),
-            cursorColor: Colors.black12,
-            obscureText: widget.obscure,
-            onChanged: _changeInput)
-      ),
+          padding: const EdgeInsets.only(bottom: 15),
+          child: TextFormField(
+              decoration: InputDecoration(
+                  labelText: widget.title,
+                  labelStyle: const TextStyle(fontSize: 24, color: Colors.grey),
+                  helperMaxLines: 2,
+                  prefixIcon: Icon(widget.icon),
+                  border: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black12),
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                  focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey, width: 3),
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)))),
+              style: const TextStyle(fontSize: 24),
+              cursorColor: Colors.black12,
+              obscureText: widget.obscure,
+              onChanged: _changeInput,
+              validator: _getHelper,
+              autovalidateMode: AutovalidateMode.onUserInteraction)),
     );
   }
 }
@@ -203,7 +250,6 @@ class SignBlock extends StatelessWidget {
             },
             child: Text(
               title,
-              textDirection: TextDirection.ltr,
               style: const TextStyle(fontSize: 16, color: Colors.grey),
             )),
         const Expanded(
@@ -219,28 +265,27 @@ class SignBlock extends StatelessWidget {
 class GoogleButton extends StatelessWidget {
   const GoogleButton({super.key});
 
-   GestureTapCallback onClick(BuildContext context) {
-     return () async {
-       User? user = await AuthRepository.signInWithGoogle();
-       if (user != null) {
-         Navigator.of(context).push(
-           PageRouteBuilder(
-             pageBuilder: (context, animation, secondaryAnimation) =>
-                 ProfileScreen(),
-             transitionsBuilder:
-                 (context, animation, secondaryAnimation, child) {
-               return FadeTransition(
-                 opacity: animation,
-                 child: child,
-               );
-             },
-             transitionDuration: const Duration(milliseconds: 500),
-           ),
-         );
-       }
-     };
-   }
-
+  GestureTapCallback onClick(BuildContext context) {
+    return () async {
+      User? user = await AuthRepository.signInWithGoogle();
+      if (user != null) {
+        Navigator.of(context).push(
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const ProfileScreen(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+            transitionDuration: const Duration(milliseconds: 500),
+          ),
+        );
+      }
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -277,10 +322,10 @@ class GoogleButton extends StatelessWidget {
               border: Border.all(width: 1, color: Colors.black),
               color: Colors.white,
             ),
-            child: const Center(
+            child: Center(
               child: Text(
-                'С помощью Google',
-                style: TextStyle(fontSize: 20),
+                AppLocalizations.of(context)!.google,
+                style: const TextStyle(fontSize: 20),
               ),
             ),
           ),
@@ -291,11 +336,25 @@ class GoogleButton extends StatelessWidget {
 }
 
 bool isValidEmail(String email) {
-  RegExp emailRegex = RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
+  RegExp emailRegex = RegExp(
+      r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
   return emailRegex.hasMatch(email);
 }
 
 bool isValidPassword(String password) {
   RegExp passwordRegex = RegExp(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$");
   return passwordRegex.hasMatch(password);
+}
+
+String _getLanguageName(Locale locale) {
+  switch (locale.languageCode) {
+    case "ru":
+      return "русский";
+    case "en":
+      return "English";
+    case "uk":
+      return "Українська";
+    default:
+      return "Unknown";
+  }
 }
