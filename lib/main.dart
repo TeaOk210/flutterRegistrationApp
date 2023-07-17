@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_reg/pages/ProfileScreen.dart';
 import 'package:flutter_reg/pages/RegistrationScreen.dart';
 import 'package:flutter_reg/utils/AuthRepository.dart';
 import 'package:flutter_reg/utils/LocaleProvider.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
@@ -31,21 +31,22 @@ class MyApp extends StatelessWidget {
         final provider = Provider.of<LocaleProvirer>(context);
 
         return MaterialApp(
-            title: 'Flutter Demo',
-            theme: ThemeData(
-              focusColor: Colors.grey,
-              useMaterial3: true,
-            ),
-            home: const RegistrationScreen(),
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: L10n.all,
-        locale: provider.locale,);
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            focusColor: Colors.grey,
+            useMaterial3: true,
+          ),
+          home: const RegistrationScreen(),
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: L10n.all,
+          locale: provider.locale,
+        );
       });
 }
 
@@ -102,6 +103,7 @@ class InputField extends StatefulWidget {
 
 class _InputFieldState extends State<InputField> {
   String input = "";
+  final _formKey = GlobalKey<FormBuilderState>();
 
   void _changeInput(String? text) {
     setState(() {
@@ -133,30 +135,49 @@ class _InputFieldState extends State<InputField> {
     return null;
   }
 
+  TextInputType? _getType() {
+    if (widget.title == "Email") {
+      return TextInputType.emailAddress;
+    } else if (widget.title == "Password") {
+      return TextInputType.visiblePassword;
+    } else if (widget.title == "Username") {
+      return TextInputType.name;
+    } else {
+      return TextInputType.none;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.9,
-      child: Padding(
+    return FormBuilder(
+      key: _formKey,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.9,
+        child: Padding(
           padding: const EdgeInsets.only(bottom: 15),
-          child: TextFormField(
-              decoration: InputDecoration(
-                  labelText: widget.title,
-                  labelStyle: const TextStyle(fontSize: 24, color: Colors.grey),
-                  helperMaxLines: 2,
-                  prefixIcon: Icon(widget.icon),
-                  border: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black12),
-                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                  focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey, width: 3),
-                      borderRadius: BorderRadius.all(Radius.circular(20.0)))),
-              style: const TextStyle(fontSize: 24),
-              cursorColor: Colors.black12,
-              obscureText: widget.obscure,
-              onChanged: _changeInput,
-              validator: _getHelper,
-              autovalidateMode: AutovalidateMode.onUserInteraction)),
+          child: FormBuilderTextField(
+            name: "Input text",
+            decoration: InputDecoration(
+                labelText: widget.title,
+                labelStyle: const TextStyle(fontSize: 24, color: Colors.grey),
+                helperMaxLines: 2,
+                prefixIcon: Icon(widget.icon),
+                border: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black12),
+                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey, width: 3),
+                    borderRadius: BorderRadius.all(Radius.circular(20.0)))),
+            style: const TextStyle(fontSize: 24),
+            cursorColor: Colors.black,
+            obscureText: widget.obscure,
+            autovalidateMode: AutovalidateMode.always,
+            keyboardType: _getType(),
+            onChanged: _changeInput,
+            validator: _getHelper,
+          ),
+        ),
+      ),
     );
   }
 }

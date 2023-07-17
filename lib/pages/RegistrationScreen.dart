@@ -96,7 +96,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           children: [
             Padding(
                 padding: const EdgeInsets.only(top: 50),
-                // child: Text("Регистрация",
                 child: Text(AppLocalizations.of(context)!.reg,
                     textDirection: TextDirection.ltr,
                     style: const TextStyle(fontSize: 50))),
