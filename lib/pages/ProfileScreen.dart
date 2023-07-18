@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_reg/pages/RegistrationScreen.dart';
-
+import 'package:get_storage/get_storage.dart';
 import '../main.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -10,9 +10,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: PersonInfo(),
-    );
+    return const PersonInfo();
   }
 }
 
@@ -26,11 +24,13 @@ class PersonInfo extends StatefulWidget {
 class _PersonInfoState extends State<PersonInfo> {
   User? user = FirebaseAuth.instance.currentUser;
   bool emailState = false;
+  late var box;
 
   @override
   void initState() {
     super.initState();
     emailState = user!.emailVerified;
+    box = GetStorage("Password");
   }
 
   String emailVerified() {
@@ -69,12 +69,14 @@ class _PersonInfoState extends State<PersonInfo> {
     if (!emailState) {
       await user!.sendEmailVerification();
       user!.reload();
+      setState(() {
+        emailState = true;
+      });
     }
   }
 
   onExit() async {
     await FirebaseAuth.instance.signOut();
-
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => const RegistrationScreen(),
@@ -93,6 +95,7 @@ class _PersonInfoState extends State<PersonInfo> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text("your password is ${box.read("value")}", style: const TextStyle(fontSize: 20, color: Colors.cyan),),
             ClipOval(
                 child: Image.network(checkImage(),
                     height: 200, width: 200, fit: BoxFit.cover)),

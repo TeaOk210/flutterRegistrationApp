@@ -15,9 +15,9 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  String email = "";
-  String password = "";
-  String username = "";
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final usernamecontroller = TextEditingController();
 
   bool emailState = false;
   bool passwordState = false;
@@ -41,27 +41,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     });
   }
 
-  void _updateUsername(String value) {
-    setState(() {
-      username = value;
-    });
-  }
-
-  void _updateEmail(String value) {
-    setState(() {
-      email = value;
-    });
-  }
-
-  void _updatePassword(String value) {
-    setState(() {
-      password = value;
-    });
-  }
-
   void _onClick() async {
     User? user = await AuthRepository.registrUsingEmail(
-        email: email, password: password, username: username);
+        email: emailController.text, password: passwordController.text, username: usernamecontroller.text);
     if (user != null) {
       Navigator.of(context).push(
         PageRouteBuilder(
@@ -103,20 +85,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 icon: Icons.email,
                 title: "Email",
                 obscure: false,
-                onTextChanged: _updateEmail,
-                state: _updateEmailState),
+                // onTextChanged: _updateEmail,
+                state: _updateEmailState,
+            controller: emailController),
             InputField(
                 icon: Icons.person,
                 title: "Username",
                 obscure: false,
-                onTextChanged: _updateUsername,
-                state: _updateUsernameState),
+                // onTextChanged: _updateUsername,
+                state: _updateUsernameState,
+            controller: usernamecontroller),
             InputField(
                 icon: Icons.lock,
                 title: "Password",
                 obscure: true,
-                onTextChanged: _updatePassword,
-                state: _updatePasswordState),
+                // onTextChanged: _updatePassword,
+                state: _updatePasswordState,
+            controller: passwordController),
             ContinueButton(
               title: AppLocalizations.of(context)!.regBtn,
               state: emailState && passwordState,

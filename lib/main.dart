@@ -8,12 +8,14 @@ import 'package:flutter_reg/pages/ProfileScreen.dart';
 import 'package:flutter_reg/pages/RegistrationScreen.dart';
 import 'package:flutter_reg/utils/AuthRepository.dart';
 import 'package:flutter_reg/utils/LocaleProvider.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 import 'l10n/l10n.dart';
 
 void main() async {
+  await GetStorage.init("Fields input prikol");
   runApp(const MyApp());
 
   await Firebase.initializeApp(
@@ -25,29 +27,29 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) => ChangeNotifierProvider(
-      create: (context) => LocaleProvirer(),
-      builder: (context, child) {
-        final provider = Provider.of<LocaleProvirer>(context);
+  Widget build(BuildContext context) => MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => LocaleProvirer()),
+  ], builder: (context, child) {
+    final provider = Provider.of<LocaleProvirer>(context);
 
-        return MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            focusColor: Colors.grey,
-            useMaterial3: true,
-          ),
-          home: const RegistrationScreen(),
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: L10n.all,
-          locale: provider.locale,
-        );
-      });
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        focusColor: Colors.grey,
+        useMaterial3: true,
+      ),
+      home: const RegistrationScreen(),
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: L10n.all,
+      locale: provider.locale,
+    );
+  });
 }
 
 class LanguageMenu extends StatelessWidget {
@@ -86,14 +88,12 @@ class InputField extends StatefulWidget {
       required this.icon,
       required this.title,
       required this.obscure,
-      required this.onTextChanged,
-      required this.state});
+      required this.state, required this.controller});
 
   final IconData icon;
   final String title;
   final bool obscure;
-
-  final ValueChanged<String> onTextChanged;
+  final TextEditingController controller;
 
   final ValueChanged<bool> state;
 
@@ -104,12 +104,19 @@ class InputField extends StatefulWidget {
 class _InputFieldState extends State<InputField> {
   String input = "";
   final _formKey = GlobalKey<FormBuilderState>();
+  late var box;
+
+  @override
+  void initState() {
+    super.initState();
+    box = GetStorage(widget.title);
+  }
 
   void _changeInput(String? text) {
     setState(() {
       input = text!;
+      box.write("value", input);
     });
-    widget.onTextChanged(text!);
 
     if (widget.title == "Email") {
       widget.state(isValidEmail(input));
@@ -171,10 +178,11 @@ class _InputFieldState extends State<InputField> {
             style: const TextStyle(fontSize: 24),
             cursorColor: Colors.black,
             obscureText: widget.obscure,
-            autovalidateMode: AutovalidateMode.always,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             keyboardType: _getType(),
-            onChanged: _changeInput,
             validator: _getHelper,
+            controller: widget.controller,
+            onChanged: _changeInput,
           ),
         ),
       ),
