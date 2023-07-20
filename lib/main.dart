@@ -28,9 +28,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MultiProvider(providers: [
-    ChangeNotifierProvider(create: (context) => LocaleProvirer()),
+    ChangeNotifierProvider(create: (context) => LocaleProvider()),
   ], builder: (context, child) {
-    final provider = Provider.of<LocaleProvirer>(context);
+    final provider = Provider.of<LocaleProvider>(context);
 
     return MaterialApp(
       title: 'Flutter Demo',
@@ -57,7 +57,7 @@ class LanguageMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<LocaleProvirer>(context);
+    final provider = Provider.of<LocaleProvider>(context);
     provider.setLocale(Localizations.localeOf(context));
 
     return PopupMenuButton<Locale>(
@@ -104,7 +104,7 @@ class InputField extends StatefulWidget {
 class _InputFieldState extends State<InputField> {
   String input = "";
   final _formKey = GlobalKey<FormBuilderState>();
-  late var box;
+  late dynamic box;
 
   @override
   void initState() {
@@ -189,7 +189,6 @@ class _InputFieldState extends State<InputField> {
     );
   }
 }
-
 class ContinueButton extends StatelessWidget {
   const ContinueButton(
       {super.key,
@@ -378,7 +377,7 @@ bool isValidPassword(String password) {
 String _getLanguageName(Locale locale) {
   switch (locale.languageCode) {
     case "ru":
-      return "русский";
+      return "Русский";
     case "en":
       return "English";
     case "uk":

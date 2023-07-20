@@ -31,11 +31,11 @@
     "@google" : {
         "description" : "используя гугл"
     },
-    "email" : "Ваша почта ",
+    "email" : "Ваша почта",
     "@email" : {
         "description" : "состояние почты"
     },
-    "emaisStateTrue" : "подтверждена",
+    "emailStateTrue" : "подтверждена",
     "@emaisStateTrue" : {
         "description" : "почта подтверждена"
     },
@@ -63,4 +63,4 @@
     "@usernameReport" : {
         "description" : "ошибка поля имени"
     }
-    }
+}

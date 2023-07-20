@@ -24,7 +24,7 @@ class PersonInfo extends StatefulWidget {
 class _PersonInfoState extends State<PersonInfo> {
   User? user = FirebaseAuth.instance.currentUser;
   bool emailState = false;
-  late var box;
+  late dynamic box;
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _PersonInfoState extends State<PersonInfo> {
 
   String emailVerified() {
     if (emailState) {
-      return AppLocalizations.of(context)!.emaisStateTrue;
+      return AppLocalizations.of(context)!.emailStateTrue;
     } else {
       return AppLocalizations.of(context)!.emailStateFalse;
     }

@@ -35,7 +35,7 @@
     "@email" : {
         "description" : "email state"
     },
-    "emaisStateTrue" : "confirmed",
+    "emailStateTrue" : "confirmed",
     "@emaisStateTrue" : {
         "description" : "email confirmed"
     },
@@ -63,4 +63,4 @@
     "@usernameReport" : {
         "description" : "name field error"
     }
-    }
+}
