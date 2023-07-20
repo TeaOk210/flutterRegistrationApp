@@ -58,7 +58,6 @@ class LanguageMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<LocaleProvider>(context);
-    provider.setLocale(Localizations.localeOf(context));
 
     return PopupMenuButton<Locale>(
       icon: const Icon(Icons.more_vert),
