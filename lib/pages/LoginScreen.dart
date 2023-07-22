@@ -35,7 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _onClick() async {
-    User? user = await AuthRepository.signInWithEmail(email: emailController.text, password: passwordController.text);
+    AuthRepository repository = AuthRepository();
+    User? user =  await repository.signInWithEmail(email: emailController.text, password: passwordController.text);
     if (user != null) {
       Navigator.of(context).push(
         PageRouteBuilder(
@@ -78,14 +79,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 icon: Icons.email,
                 title: "Email",
                 obscure: false,
-                // onTextChanged: _updateEmail,
                 state: _updateEmailState,
             controller: emailController,),
             InputField(
                 icon: Icons.lock,
                 title: "Password",
                 obscure: true,
-                // onTextChanged: _updatePassword,
                 state: _updatePasswordState,
             controller: passwordController,),
             ContinueButton(

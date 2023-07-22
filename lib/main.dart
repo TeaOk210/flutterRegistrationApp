@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_reg/utils/LocaleProvider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_reg/pages/ProfileScreen.dart';
 import 'package:flutter_reg/pages/RegistrationScreen.dart';
 import 'package:flutter_reg/utils/AuthRepository.dart';
-import 'package:flutter_reg/utils/LocaleProvider.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +15,7 @@ import 'firebase_options.dart';
 import 'l10n/l10n.dart';
 
 void main() async {
-  await GetStorage.init("Fields input prikol");
+  await GetStorage.init("Fields input rofl");
   runApp(const MyApp());
 
   await Firebase.initializeApp(
@@ -87,7 +87,8 @@ class InputField extends StatefulWidget {
       required this.icon,
       required this.title,
       required this.obscure,
-      required this.state, required this.controller});
+      required this.state,
+       required this.controller});
 
   final IconData icon;
   final String title;
@@ -294,7 +295,8 @@ class GoogleButton extends StatelessWidget {
 
   GestureTapCallback onClick(BuildContext context) {
     return () async {
-      User? user = await AuthRepository.signInWithGoogle();
+    AuthRepository repository = AuthRepository();
+      User? user = await repository.signInWithGoogle();
       if (user != null) {
         Navigator.of(context).push(
           PageRouteBuilder(
@@ -366,14 +368,14 @@ bool isValidEmail(String email) {
   RegExp emailRegex = RegExp(
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
   return emailRegex.hasMatch(email);
-}
 
+}
 bool isValidPassword(String password) {
   RegExp passwordRegex = RegExp(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$");
   return passwordRegex.hasMatch(password);
-}
 
-String _getLanguageName(Locale locale) {
+
+}String _getLanguageName(Locale locale) {
   switch (locale.languageCode) {
     case "ru":
       return "Русский";

@@ -42,7 +42,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void _onClick() async {
-    User? user = await AuthRepository.registerUsingEmail(
+    AuthRepository repository = AuthRepository();
+    User? user = await repository.registerUsingEmail(
         email: emailController.text, password: passwordController.text, username: usernamecontroller.text);
     if (user != null) {
       Navigator.of(context).push(
