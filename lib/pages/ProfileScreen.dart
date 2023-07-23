@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_reg/pages/RegistrationScreen.dart';
 import 'package:get_storage/get_storage.dart';
+import '../generated/l10n.dart';
 import '../main.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -35,9 +35,9 @@ class _PersonInfoState extends State<PersonInfo> {
 
   String emailVerified() {
     if (emailState) {
-      return AppLocalizations.of(context)!.emailStateTrue;
+      return S.of(context).emailStateTrue;
     } else {
-      return AppLocalizations.of(context)!.emailStateFalse;
+      return S.of(context).emailStateFalse;
     }
   }
 
@@ -103,7 +103,7 @@ class _PersonInfoState extends State<PersonInfo> {
                 style: const TextStyle(fontSize: 20)),
             RichText(
                 text: TextSpan(
-                    text: AppLocalizations.of(context)!.email,
+                    text: S.of(context).email,
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                     children: [
                   TextSpan(
@@ -117,7 +117,7 @@ class _PersonInfoState extends State<PersonInfo> {
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStatePropertyAll(buttonColor())),
-                    child: Text(AppLocalizations.of(context)!.reportEmail,
+                    child: Text(S.of(context).reportEmail,
                         style: const TextStyle(
                             fontSize: 15, color: Colors.white)))),
             Padding(
@@ -126,7 +126,7 @@ class _PersonInfoState extends State<PersonInfo> {
                     onPressed: onExit,
                     style: const ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(Colors.cyan)),
-                    child: Text(AppLocalizations.of(context)!.signOut,
+                    child: Text(S.of(context).signOut,
                         style: const TextStyle(
                             fontSize: 15, color: Colors.white))))
           ],

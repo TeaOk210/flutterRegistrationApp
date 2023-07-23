@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_reg/utils/LocaleProvider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_reg/pages/ProfileScreen.dart';
 import 'package:flutter_reg/pages/RegistrationScreen.dart';
@@ -12,7 +11,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
-import 'l10n/l10n.dart';
+import 'generated/l10n.dart';
+
 
 void main() async {
   await GetStorage.init("Fields input rofl");
@@ -41,12 +41,12 @@ class MyApp extends StatelessWidget {
       home: const RegistrationScreen(),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
-        AppLocalizations.delegate,
+        S.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: L10n.all,
+      supportedLocales: S.delegate.supportedLocales,
       locale: provider.locale,
     );
   });
@@ -65,7 +65,7 @@ class LanguageMenu extends StatelessWidget {
         provider.setLocale(locale);
       },
       itemBuilder: (BuildContext context) {
-        return L10n.all.map((Locale locale) {
+        return S.delegate.supportedLocales.map((Locale locale) {
           return PopupMenuItem<Locale>(
             value: locale,
             child: Text(
@@ -131,13 +131,13 @@ class _InputFieldState extends State<InputField> {
     if (widget.title == "Email" && text != null) {
       return isValidEmail(text)
           ? null
-          : AppLocalizations.of(context)!.emailReport;
+          : S.of(context).emailReport;
     } else if (widget.title == "Password" && text != null) {
       return isValidPassword(text)
           ? null
-          : AppLocalizations.of(context)!.passwordReport;
+          : S.of(context).passwordReport;
     } else if (widget.title == "Username" && text == null) {
-      return AppLocalizations.of(context)!.usernameReport;
+      return S.of(context).usernameReport;
     }
     return null;
   }
@@ -353,7 +353,7 @@ class GoogleButton extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                AppLocalizations.of(context)!.google,
+                S.of(context).google,
                 style: const TextStyle(fontSize: 20),
               ),
             ),

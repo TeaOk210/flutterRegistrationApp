@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reg/pages/RegistrationScreen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import '../generated/l10n.dart';
 import '../main.dart';
 import '../utils/AuthRepository.dart';
 import 'ProfileScreen.dart';
@@ -72,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             Padding(
                 padding: const EdgeInsets.only(top: 50),
-                child: Text(AppLocalizations.of(context)!.ent,
+                child: Text(S.of(context).ent,
                     textDirection: TextDirection.ltr,
                     style: const TextStyle(fontSize: 50))),
             InputField(
@@ -88,12 +87,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 state: _updatePasswordState,
             controller: passwordController,),
             ContinueButton(
-              title: AppLocalizations.of(context)!.entBtn,
+              title: S.of(context).entBtn,
               state: emailState && passwordState,
               callback: _onClick,
             ),
             SignBlock(
-                title: AppLocalizations.of(context)!.orReg, screen: const RegistrationScreen()),
+                title: S.of(context).orReg, screen: const RegistrationScreen()),
             const GoogleButton()
           ],
         ),

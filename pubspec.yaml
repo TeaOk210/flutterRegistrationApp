@@ -28,19 +28,18 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  page_transition: ^2.0.0
+  page_transition: ^2.0.9
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.5
 
-  firebase_auth: ^4.6.3
-  firebase_core: ^2.14.0
+  firebase_auth: ^4.7.1
+  firebase_core: ^2.15.0
 
-  google_sign_in: ^5.0.1
+  google_sign_in: ^6.1.4
 
   get_storage: ^2.1.1
 
@@ -49,7 +48,6 @@ dependencies:
   flutter_form_builder: ^9.0.0
   flutter_localizations:
     sdk: flutter
-
 
 dev_dependencies:
   flutter_test:
@@ -60,11 +58,10 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter packages.
 flutter:
 
@@ -79,13 +76,10 @@ flutter:
   assets:
     - assets/images/google.png
   #   - images/a_dot_ham.jpeg
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
@@ -105,3 +99,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_intl:
+  enabled: true

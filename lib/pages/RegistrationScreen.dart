@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reg/pages/LoginScreen.dart';
 import 'package:flutter_reg/pages/ProfileScreen.dart';
 import 'package:flutter_reg/utils/AuthRepository.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../generated/l10n.dart';
 import '../main.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -79,7 +79,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           children: [
             Padding(
                 padding: const EdgeInsets.only(top: 50),
-                child: Text(AppLocalizations.of(context)!.reg,
+                child: Text(S.of(context).reg,
                     textDirection: TextDirection.ltr,
                     style: const TextStyle(fontSize: 50))),
             InputField(
@@ -104,11 +104,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 state: _updatePasswordState,
             controller: passwordController),
             ContinueButton(
-              title: AppLocalizations.of(context)!.regBtn,
+              title: S.of(context).regBtn,
               state: emailState && passwordState,
               callback: _onClick,
             ),
-            SignBlock(title: AppLocalizations.of(context)!.orEnt, screen: const LoginScreen()),
+            SignBlock(title: S.of(context).orEnt, screen: const LoginScreen()),
             const GoogleButton()
           ],
         ),
