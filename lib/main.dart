@@ -2,16 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_reg/utils/LocaleProvider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_reg/pages/ProfileScreen.dart';
-import 'package:flutter_reg/pages/RegistrationScreen.dart';
-import 'package:flutter_reg/utils/AuthRepository.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 import 'generated/l10n.dart';
+import 'pages/index.dart';
+import 'utils/index.dart';
 
 
 void main() async {
@@ -38,7 +36,6 @@ class MyApp extends StatelessWidget {
         focusColor: Colors.grey,
         useMaterial3: true,
       ),
-      home: const RegistrationScreen(),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
         S.delegate,
@@ -48,6 +45,12 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: S.delegate.supportedLocales,
       locale: provider.locale,
+      routes: {
+        '/registration': (context) => const RegistrationScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/profile': (context) => const ProfileScreen(),
+      },
+      initialRoute: "/registration",
     );
   });
 }
@@ -247,7 +250,7 @@ class SignBlock extends StatelessWidget {
   const SignBlock({super.key, required this.screen, required this.title});
 
   final String title;
-  final Widget screen;
+  final String screen;
 
   @override
   Widget build(BuildContext context) {
@@ -261,20 +264,7 @@ class SignBlock extends StatelessWidget {
                 child: Divider(height: 100, color: Colors.grey, thickness: 2))),
         TextButton(
             onPressed: () {
-              Navigator.of(context).push(
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) =>
-                      screen,
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                    return FadeTransition(
-                      opacity: animation,
-                      child: child,
-                    );
-                  },
-                  transitionDuration: const Duration(milliseconds: 500),
-                ),
-              );
+              Navigator.of(context).pushNamed(screen);
             },
             child: Text(
               title,
@@ -298,20 +288,7 @@ class GoogleButton extends StatelessWidget {
     AuthRepository repository = AuthRepository();
       User? user = await repository.signInWithGoogle();
       if (user != null) {
-        Navigator.of(context).push(
-          PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                const ProfileScreen(),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity: animation,
-                child: child,
-              );
-            },
-            transitionDuration: const Duration(milliseconds: 500),
-          ),
-        );
+        Navigator.of(context).pushNamed("/profile");
       }
     };
   }

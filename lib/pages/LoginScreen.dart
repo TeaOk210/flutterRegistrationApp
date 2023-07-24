@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_reg/pages/RegistrationScreen.dart';
 import '../generated/l10n.dart';
 import '../main.dart';
-import '../utils/AuthRepository.dart';
-import 'ProfileScreen.dart';
+import '../utils/index.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -37,20 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
     AuthRepository repository = AuthRepository();
     User? user =  await repository.signInWithEmail(email: emailController.text, password: passwordController.text);
     if (user != null) {
-      Navigator.of(context).push(
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const ProfileScreen(),
-          transitionsBuilder:
-              (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: animation,
-              child: child,
-            );
-          },
-          transitionDuration: const Duration(milliseconds: 500),
-        ),
-      );
+      Navigator.of(context).pushNamed("/profile");
     }
   }
 
@@ -92,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
               callback: _onClick,
             ),
             SignBlock(
-                title: S.of(context).orReg, screen: const RegistrationScreen()),
+                title: S.of(context).orReg, screen: "/registration"),
             const GoogleButton()
           ],
         ),
