@@ -38,6 +38,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "The password must contain numbers and letters, and be at least 8 characters"),
         "reg": MessageLookupByLibrary.simpleMessage("Registration"),
         "regBtn": MessageLookupByLibrary.simpleMessage("sign up"),
+        "registrationMailReport": MessageLookupByLibrary.simpleMessage(
+            "the mail is already registered"),
         "reportEmail": MessageLookupByLibrary.simpleMessage("Confirm mail"),
         "signOut": MessageLookupByLibrary.simpleMessage("Log out of account"),
         "usernameReport": MessageLookupByLibrary.simpleMessage(

@@ -209,6 +209,16 @@ class S {
       args: [],
     );
   }
+
+  /// `the mail is already registered`
+  String get registrationMailReport {
+    return Intl.message(
+      'the mail is already registered',
+      name: 'registrationMailReport',
+      desc: 'Mail error',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

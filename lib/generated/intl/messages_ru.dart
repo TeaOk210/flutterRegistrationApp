@@ -38,6 +38,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Пароль должен содержать цифры и буквы, и быть не менее 8 символов"),
         "reg": MessageLookupByLibrary.simpleMessage("Регистрация"),
         "regBtn": MessageLookupByLibrary.simpleMessage("зарегистрироваться"),
+        "registrationMailReport":
+            MessageLookupByLibrary.simpleMessage("Почта уже зарегистрирована"),
         "reportEmail":
             MessageLookupByLibrary.simpleMessage("Подтвердить почту"),
         "signOut": MessageLookupByLibrary.simpleMessage("Выйти из аккауниа"),

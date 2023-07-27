@@ -62,5 +62,9 @@
     "usernameReport" : "The field should not be empty!",
     "@usernameReport" : {
         "description" : "name field error"
+    },
+    "registrationMailReport" : "the mail is already registered",
+    "@registrationMailReport" : {
+        "description" : "Mail error"
     }
 }

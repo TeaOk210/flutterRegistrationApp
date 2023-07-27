@@ -1,8 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_reg/AuthViewModel.dart';
+import 'package:flutter_reg/utils/AuthResult.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +14,6 @@ import 'firebase_options.dart';
 import 'generated/l10n.dart';
 import 'pages/index.dart';
 import 'utils/index.dart';
-
 
 void main() async {
   await GetStorage.init("Fields input rofl");
@@ -27,8 +30,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => LocaleProvider()),
+    ChangeNotifierProvider(create: (context) => AuthViewModelSingleton.instance)
   ], builder: (context, child) {
+
     final provider = Provider.of<LocaleProvider>(context);
+    final model = Provider.of<AuthViewModel>(context);
+
+    model.authResultStream.listen( (result) {
+      if (result.user != null) {
+        Navigator.of(context).pushReplacementNamed("/profile");
+      }
+    });
 
     return MaterialApp(
       title: 'Flutter Demo',
@@ -132,13 +144,9 @@ class _InputFieldState extends State<InputField> {
 
   String? _getHelper(String? text) {
     if (widget.title == "Email" && text != null) {
-      return isValidEmail(text)
-          ? null
-          : S.of(context).emailReport;
+      return isValidEmail(text) ? null: S.of(context).emailReport;
     } else if (widget.title == "Password" && text != null) {
-      return isValidPassword(text)
-          ? null
-          : S.of(context).passwordReport;
+      return isValidPassword(text) ? null: S.of(context).passwordReport;
     } else if (widget.title == "Username" && text == null) {
       return S.of(context).usernameReport;
     }
@@ -283,13 +291,15 @@ class SignBlock extends StatelessWidget {
 class GoogleButton extends StatelessWidget {
   const GoogleButton({super.key});
 
-  GestureTapCallback onClick(BuildContext context) {
+  onClick(BuildContext context) {
     return () async {
-    AuthRepository repository = AuthRepository();
-      User? user = await repository.signInWithGoogle();
-      if (user != null) {
-        Navigator.of(context).pushNamed("/profile");
-      }
+    AuthViewModel model = AuthViewModel();
+    await model.googleLogin();
+      // User? user = await repository.signInWithGoogle();
+      // if (user != null) {
+      //   // ignore: use_build_context_synchronously
+      //   Navigator.of(context).pushNamed("/profile");
+      // }
     };
   }
 
@@ -345,14 +355,14 @@ bool isValidEmail(String email) {
   RegExp emailRegex = RegExp(
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
   return emailRegex.hasMatch(email);
-
 }
+
 bool isValidPassword(String password) {
   RegExp passwordRegex = RegExp(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$");
   return passwordRegex.hasMatch(password);
+}
 
-
-}String _getLanguageName(Locale locale) {
+String _getLanguageName(Locale locale) {
   switch (locale.languageCode) {
     case "ru":
       return "Русский";

@@ -62,5 +62,9 @@
     "usernameReport" : "Поле не должно быть пустым!",
     "@usernameReport" : {
         "description" : "ошибка поля имени"
+    },
+    "registrationMailReport" : "Почта уже зарегистрирована",
+    "@registrationMailReport" : {
+        "description" : "Ошибка, если пользователь уже зарегистрирован"
     }
 }

@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_reg/AuthViewModel.dart';
+import 'package:provider/provider.dart';
 
 import '../generated/l10n.dart';
 import '../main.dart';
-import '../utils/index.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -40,12 +40,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void _onClick() async {
-    AuthRepository repository = AuthRepository();
-    User? user = await repository.registerUsingEmail(
-        email: emailController.text, password: passwordController.text, username: usernamecontroller.text);
-    if (user != null) {
-      Navigator.of(context).pushNamed('/profile');
-    }
+    final model = Provider.of<AuthViewModel>(context);
+    await model.registrationUser(emailController.text, usernamecontroller.text, passwordController.text);
+    // AuthRepository repository = AuthRepository();
+    // User? user = await repository.registerUsingEmail(
+    //     email: emailController.text, password: passwordController.text, username: usernamecontroller.text);
+    // if (user != null) {
+    //   Navigator.of(context).pushReplacementNamed('/profile');
+    // }
   }
 
   @override

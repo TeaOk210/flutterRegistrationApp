@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_reg/pages/RegistrationScreen.dart';
 import 'package:get_storage/get_storage.dart';
 import '../generated/l10n.dart';
 import '../main.dart';
@@ -77,11 +76,7 @@ class _PersonInfoState extends State<PersonInfo> {
 
   onExit() async {
     await FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => const RegistrationScreen(),
-      ),
-    );
+    Navigator.of(context).pushReplacementNamed("/registration");
   }
 
   @override
