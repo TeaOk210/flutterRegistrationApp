@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+
 import '../generated/l10n.dart';
 import '../main.dart';
 
@@ -68,14 +69,12 @@ class _PersonInfoState extends State<PersonInfo> {
     if (!emailState) {
       await user!.sendEmailVerification();
       user!.reload();
-      setState(() {
-        emailState = true;
-      });
     }
   }
 
-  onExit() async{
+  onExit() async {
     await FirebaseAuth.instance.signOut();
+    // ignore: use_build_context_synchronously
     Navigator.of(context).pushReplacementNamed("/registration");
   }
 

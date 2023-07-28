@@ -16,7 +16,9 @@ class AuthRepository implements AuthMethods {
         email: email,
         password: password,
       );
-      userCredential.user!.updateDisplayName(username);
+      final user = userCredential.user;
+      user!.updateDisplayName(username);
+      user.reload();
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "email-already-in-use":

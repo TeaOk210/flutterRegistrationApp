@@ -11,50 +11,53 @@ import 'pages/index.dart';
 import 'utils/index.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init("Fields input rofl");
-  runApp(const MyApp());
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
-  Widget build(BuildContext context) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (context) => LocaleProvider()),
-            // ChangeNotifierProvider(
-            //     create: (context) => AuthViewModelSingleton.instance)
-          ],
-          builder: (context, child) {
-            final provider = Provider.of<LocaleProvider>(context);
+@override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => LocaleProvider()),
+      ],
+      builder: (context, child) {
+        final provider = Provider.of<LocaleProvider>(context);
 
-            return MaterialApp(
-              title: 'Flutter Demo',
-              theme: ThemeData(
-                focusColor: Colors.grey,
-                useMaterial3: true,
-              ),
-              debugShowCheckedModeBanner: false,
-              localizationsDelegates: const [
-                S.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              supportedLocales: S.delegate.supportedLocales,
-              locale: provider.locale,
-              routes: {
-                '/registration': (context) => const RegistrationScreen(),
-                '/login': (context) => const LoginScreen(),
-                '/profile': (context) => const ProfileScreen(),
-              },
-              initialRoute: "/registration",
-            );
-          });
+        return MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            focusColor: Colors.grey,
+            useMaterial3: true,
+          ),
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: const [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: S.delegate.supportedLocales,
+          locale: provider.locale,
+          routes: {
+            '/registration': (context) => const RegistrationScreen(),
+            '/login': (context) => const LoginScreen(),
+            '/profile': (context) => const ProfileScreen(),
+          },
+          initialRoute: "/registration",
+        );
+      },
+    );
+  }
 }
 
 class LanguageMenu extends StatelessWidget {
@@ -287,11 +290,11 @@ class GoogleButton extends StatelessWidget {
       final repo = AuthRepository();
       try {
         await repo.signInWithGoogle();
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).pushReplacementNamed("/profile");
       } catch (e) {
         print(e);
       }
-      // final model = Provider.of<AuthViewModel>(context, listen: false);
-      // await model.googleLogin();
     };
   }
 

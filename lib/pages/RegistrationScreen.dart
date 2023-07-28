@@ -23,6 +23,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   String? error;
 
+  @override
+  void initState() {
+    super.initState();
+    if (FirebaseAuth.instance.currentUser != null) {
+          Navigator.of(context).pushReplacementNamed("/profile");
+    }
+  }
+
   void _updateUsernameState(bool value) {
     setState(() {
       usernameState = value;
@@ -48,6 +56,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           email: emailController.text,
           username: usernamecontroller.text,
           password: passwordController.text);
+          Navigator.of(context).pushReplacementNamed("/profile");
     } on FirebaseAuthException catch (e) {
       setState(() {
         error = e.message;

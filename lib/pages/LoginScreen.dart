@@ -38,11 +38,12 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       await repo.signInWithEmail(
           email: emailController.text, password: passwordController.text);
+      Navigator.of(context).pushReplacementNamed("/profile");
     } on FirebaseAuthException catch (e) {
       setState(() {
         error = e.message;
       });
-    } 
+    }
   }
 
   @override
