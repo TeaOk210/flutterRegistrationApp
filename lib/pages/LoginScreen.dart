@@ -1,6 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_reg/AuthViewModel.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_reg/utils/AuthRepository.dart';
+
 import '../generated/l10n.dart';
 import '../main.dart';
 
@@ -18,6 +19,8 @@ class _LoginScreenState extends State<LoginScreen> {
   bool emailState = false;
   bool passwordState = false;
 
+  String? error;
+
   void _updateEmailState(bool value) {
     setState(() {
       emailState = value;
@@ -31,8 +34,15 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _onClick() async {
-    final model = context.read<AuthViewModel>();
-    await model.loginUser(emailController.text, passwordController.text);
+    final repo = AuthRepository();
+    try {
+      await repo.signInWithEmail(
+          email: emailController.text, password: passwordController.text);
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        error = e.message;
+      });
+    } 
   }
 
   @override
@@ -67,6 +77,8 @@ class _LoginScreenState extends State<LoginScreen> {
             state: _updatePasswordState,
             controller: passwordController,
           ),
+          Text(error ?? "",
+              style: const TextStyle(fontSize: 14, color: Colors.red)),
           ContinueButton(
             title: S.of(context).entBtn,
             state: emailState && passwordState,

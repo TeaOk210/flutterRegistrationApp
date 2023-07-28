@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_reg/utils/AuthResult.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../generated/l10n.dart';
@@ -7,56 +6,52 @@ import 'AuthMethods.dart';
 
 class AuthRepository implements AuthMethods {
   @override
-  Stream<AuthResult> registerUsingEmail(
+  Future<void> registerUsingEmail(
       {required String email,
       required String password,
-      required String username}) async* {
+      required String username}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      user = userCredential.user;
-      await user!.updateDisplayName(username);
-      await user.reload();
-      yield AuthResult(user: user);
+      userCredential.user!.updateDisplayName(username);
     } on FirebaseAuthException catch (e) {
-      String error = e.code;
       switch (e.code) {
         case "email-already-in-use":
-          error = S.current.registrationMailReport;
-          break;
+          throw FirebaseAuthException(
+              code: e.code, message: S.current.language);
       }
-      yield AuthResult(error: error);
     } catch (e) {
-      yield AuthResult(error: e.toString());
+      print(e);
     }
   }
 
   @override
-  Stream<AuthResult> signInWithEmail(
-      {required String email, required String password}) async* {
+  Future<void> signInWithEmail(
+      {required String email, required String password}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
     try {
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      user = userCredential.user;
-      yield AuthResult(user: user);
+      await auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      yield AuthResult(error: e.code);
+      String? errorMessage;
+      switch (e.code) {
+        case "user-not-found":
+          errorMessage = S.current.loginUserReport;
+        case "wrong-password":
+          errorMessage = S.current.loginPasswordReport;
+      }
+      throw FirebaseAuthException(code: e.code, message: errorMessage);
     } catch (e) {
-      yield AuthResult(error: e.toString());
+      print(e);
     }
   }
 
   @override
-  Stream<AuthResult> signInWithGoogle() async* {
+  Future<void> signInWithGoogle() async {
     FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
-    
+
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn();
       final GoogleSignInAccount? googleSignInAccount =
@@ -66,13 +61,12 @@ class AuthRepository implements AuthMethods {
             await googleSignInAccount.authentication;
         final AuthCredential credential = GoogleAuthProvider.credential(
             accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-        UserCredential userCredential =
-            await auth.signInWithCredential(credential);
-        user = userCredential.user;
-        yield AuthResult(user: user);
+        await auth.signInWithCredential(credential);;
       }
     } on FirebaseAuthException catch (e) {
-      yield AuthResult(error: e.code);
+      throw FirebaseAuthException(code: e.code, message: e.toString());
+    } catch (e) {
+      rethrow;
     }
   }
 }

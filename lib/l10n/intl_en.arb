@@ -66,5 +66,13 @@
     "registrationMailReport" : "the mail is already registered",
     "@registrationMailReport" : {
         "description" : "Mail error"
-    }
+    },
+    "loginPasswordReport" : "Invalid password, or it does not exist",
+    "@loginPasswordReport" : {
+        "description" : "error if the password is incorrect"
+    },
+    "loginUserReport" : "User not found",
+    "@loginUserReport" : {
+        "description" : "error if the user is not found"
+    }  
 }

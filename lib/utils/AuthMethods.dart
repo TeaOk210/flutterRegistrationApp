@@ -1,12 +1,10 @@
-import 'package:flutter_reg/utils/AuthResult.dart';
-
 abstract class AuthMethods {
-  Stream<AuthResult> registerUsingEmail(
+  Future<void> registerUsingEmail(
       {required String email,
       required String password,
       required String username});
 
-  Stream<AuthResult> signInWithEmail(
+  Future<void> signInWithEmail(
       {required String email, required String password});
-  Stream<AuthResult> signInWithGoogle();
+  Future<void> signInWithGoogle();
 }

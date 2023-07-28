@@ -219,6 +219,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Invalid password, or it does not exist`
+  String get loginPasswordReport {
+    return Intl.message(
+      'Invalid password, or it does not exist',
+      name: 'loginPasswordReport',
+      desc: 'error if the password is incorrect',
+      args: [],
+    );
+  }
+
+  /// `User not found`
+  String get loginUserReport {
+    return Intl.message(
+      'User not found',
+      name: 'loginUserReport',
+      desc: 'error if the user is not found',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

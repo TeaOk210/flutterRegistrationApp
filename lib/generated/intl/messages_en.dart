@@ -32,6 +32,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "entBtn": MessageLookupByLibrary.simpleMessage("log in"),
         "google": MessageLookupByLibrary.simpleMessage("Using google"),
         "language": MessageLookupByLibrary.simpleMessage("English"),
+        "loginPasswordReport": MessageLookupByLibrary.simpleMessage(
+            "Invalid password, or it does not exist"),
+        "loginUserReport":
+            MessageLookupByLibrary.simpleMessage("User not found"),
         "orEnt": MessageLookupByLibrary.simpleMessage("or log in"),
         "orReg": MessageLookupByLibrary.simpleMessage("or sign up"),
         "passwordReport": MessageLookupByLibrary.simpleMessage(

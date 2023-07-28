@@ -1,9 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_reg/AuthViewModel.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
@@ -28,8 +26,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => MultiProvider(
           providers: [
             ChangeNotifierProvider(create: (context) => LocaleProvider()),
-            ChangeNotifierProvider(
-                create: (context) => AuthViewModelSingleton.instance)
+            // ChangeNotifierProvider(
+            //     create: (context) => AuthViewModelSingleton.instance)
           ],
           builder: (context, child) {
             final provider = Provider.of<LocaleProvider>(context);
@@ -286,8 +284,14 @@ class GoogleButton extends StatelessWidget {
 
   onClick(BuildContext context) {
     return () async {
-      final model = Provider.of<AuthViewModel>(context, listen: false);
-      await model.googleLogin();
+      final repo = AuthRepository();
+      try {
+        await repo.signInWithGoogle();
+      } catch (e) {
+        print(e);
+      }
+      // final model = Provider.of<AuthViewModel>(context, listen: false);
+      // await model.googleLogin();
     };
   }
 

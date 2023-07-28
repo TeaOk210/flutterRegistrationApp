@@ -66,5 +66,13 @@
     "registrationMailReport" : "Почта уже зарегистрирована",
     "@registrationMailReport" : {
         "description" : "Ошибка, если пользователь уже зарегистрирован"
-    }
+    },
+    "loginPasswordReport" : "Неверный пароль, либо его не существует",
+    "@loginPasswordReport" : {
+        "description" : "ошибка, если пароль не правильный"
+    },
+    "loginUserReport" : "Пользователь не найден",
+    "@loginUserReport" : {
+        "description" : "ошибка, если польщователь не найден"
+    }   
 }

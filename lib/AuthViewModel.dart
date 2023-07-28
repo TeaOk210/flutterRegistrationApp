@@ -1,4 +1,4 @@
-import 'dart:async';
+/* import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -44,3 +44,4 @@ class AuthViewModelSingleton {
   static final AuthViewModel _instance = AuthViewModel();
   static AuthViewModel get instance => _instance;
 }
+ */
