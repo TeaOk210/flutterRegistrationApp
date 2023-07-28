@@ -74,7 +74,7 @@ class _PersonInfoState extends State<PersonInfo> {
     }
   }
 
-  onExit() async {
+  onExit() async{
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushReplacementNamed("/registration");
   }
@@ -90,7 +90,10 @@ class _PersonInfoState extends State<PersonInfo> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("your password is ${box.read("value")}", style: const TextStyle(fontSize: 20, color: Colors.cyan),),
+            Text(
+              "your password is ${box.read("value")}",
+              style: const TextStyle(fontSize: 20, color: Colors.cyan),
+            ),
             ClipOval(
                 child: Image.network(checkImage(),
                     height: 200, width: 200, fit: BoxFit.cover)),

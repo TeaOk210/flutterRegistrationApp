@@ -1,12 +1,9 @@
-import 'dart:async';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_reg/AuthViewModel.dart';
-import 'package:flutter_reg/utils/AuthResult.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
@@ -28,43 +25,38 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) => MultiProvider(providers: [
-    ChangeNotifierProvider(create: (context) => LocaleProvider()),
-    ChangeNotifierProvider(create: (context) => AuthViewModelSingleton.instance)
-  ], builder: (context, child) {
+  Widget build(BuildContext context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context) => LocaleProvider()),
+            ChangeNotifierProvider(
+                create: (context) => AuthViewModelSingleton.instance)
+          ],
+          builder: (context, child) {
+            final provider = Provider.of<LocaleProvider>(context);
 
-    final provider = Provider.of<LocaleProvider>(context);
-    final model = Provider.of<AuthViewModel>(context);
-
-    model.authResultStream.listen( (result) {
-      if (result.user != null) {
-        Navigator.of(context).pushReplacementNamed("/profile");
-      }
-    });
-
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        focusColor: Colors.grey,
-        useMaterial3: true,
-      ),
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: const [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: S.delegate.supportedLocales,
-      locale: provider.locale,
-      routes: {
-        '/registration': (context) => const RegistrationScreen(),
-        '/login': (context) => const LoginScreen(),
-        '/profile': (context) => const ProfileScreen(),
-      },
-      initialRoute: "/registration",
-    );
-  });
+            return MaterialApp(
+              title: 'Flutter Demo',
+              theme: ThemeData(
+                focusColor: Colors.grey,
+                useMaterial3: true,
+              ),
+              debugShowCheckedModeBanner: false,
+              localizationsDelegates: const [
+                S.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: S.delegate.supportedLocales,
+              locale: provider.locale,
+              routes: {
+                '/registration': (context) => const RegistrationScreen(),
+                '/login': (context) => const LoginScreen(),
+                '/profile': (context) => const ProfileScreen(),
+              },
+              initialRoute: "/registration",
+            );
+          });
 }
 
 class LanguageMenu extends StatelessWidget {
@@ -103,7 +95,7 @@ class InputField extends StatefulWidget {
       required this.title,
       required this.obscure,
       required this.state,
-       required this.controller});
+      required this.controller});
 
   final IconData icon;
   final String title;
@@ -144,9 +136,9 @@ class _InputFieldState extends State<InputField> {
 
   String? _getHelper(String? text) {
     if (widget.title == "Email" && text != null) {
-      return isValidEmail(text) ? null: S.of(context).emailReport;
+      return isValidEmail(text) ? null : S.of(context).emailReport;
     } else if (widget.title == "Password" && text != null) {
-      return isValidPassword(text) ? null: S.of(context).passwordReport;
+      return isValidPassword(text) ? null : S.of(context).passwordReport;
     } else if (widget.title == "Username" && text == null) {
       return S.of(context).usernameReport;
     }
@@ -200,6 +192,7 @@ class _InputFieldState extends State<InputField> {
     );
   }
 }
+
 class ContinueButton extends StatelessWidget {
   const ContinueButton(
       {super.key,
@@ -293,13 +286,8 @@ class GoogleButton extends StatelessWidget {
 
   onClick(BuildContext context) {
     return () async {
-    AuthViewModel model = AuthViewModel();
-    await model.googleLogin();
-      // User? user = await repository.signInWithGoogle();
-      // if (user != null) {
-      //   // ignore: use_build_context_synchronously
-      //   Navigator.of(context).pushNamed("/profile");
-      // }
+      final model = Provider.of<AuthViewModel>(context, listen: false);
+      await model.googleLogin();
     };
   }
 

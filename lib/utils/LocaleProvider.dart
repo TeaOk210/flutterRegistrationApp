@@ -3,7 +3,8 @@ import 'package:flutter/cupertino.dart';
 import '../generated/l10n.dart';
 
 class LocaleProvider extends ChangeNotifier {
-  Locale? _locale; Locale? get locale => _locale;
+  Locale? _locale;
+  Locale? get locale => _locale;
 
   LocaleProvider() {
     _locale = WidgetsBinding.instance.window.locales.first;

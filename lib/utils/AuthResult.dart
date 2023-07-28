@@ -15,10 +15,8 @@ class AuthResult {
   @override
   bool operator ==(covariant AuthResult other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.user == user &&
-      other.error == error;
+
+    return other.user == user && other.error == error;
   }
 
   @override

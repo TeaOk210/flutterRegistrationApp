@@ -18,7 +18,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool emailState = false;
   bool passwordState = false;
 
-
   void _updateEmailState(bool value) {
     setState(() {
       emailState = value;
@@ -32,58 +31,51 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _onClick() async {
-    final model = Provider.of<AuthViewModel>(context);
+    final model = context.read<AuthViewModel>();
     await model.loginUser(emailController.text, passwordController.text);
-    // AuthRepository repository = AuthRepository();
-    // User? user =  await repository.signInWithEmail(email: emailController.text, password: passwordController.text);
-    // if (user != null) {
-    //   Navigator.of(context).pushReplacementNamed("/profile");
-    // }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: const [
-          LanguageMenu()
-        ],
+        actions: const [LanguageMenu()],
         automaticallyImplyLeading: false,
       ),
       resizeToAvoidBottomInset: false,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-                padding: const EdgeInsets.only(top: 50),
-                child: Text(S.of(context).ent,
-                    textDirection: TextDirection.ltr,
-                    style: const TextStyle(fontSize: 50))),
-            InputField(
-                icon: Icons.email,
-                title: "Email",
-                obscure: false,
-                state: _updateEmailState,
-            controller: emailController,),
-            InputField(
-                icon: Icons.lock,
-                title: "Password",
-                obscure: true,
-                state: _updatePasswordState,
-            controller: passwordController,),
-            ContinueButton(
-              title: S.of(context).entBtn,
-              state: emailState && passwordState,
-              callback: _onClick,
-            ),
-            SignBlock(
-                title: S.of(context).orReg, screen: "/registration"),
-            const GoogleButton()
-          ],
-        ),
-      ),
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+              padding: const EdgeInsets.only(top: 50),
+              child: Text(S.of(context).ent,
+                  textDirection: TextDirection.ltr,
+                  style: const TextStyle(fontSize: 50))),
+          InputField(
+            icon: Icons.email,
+            title: "Email",
+            obscure: false,
+            state: _updateEmailState,
+            controller: emailController,
+          ),
+          InputField(
+            icon: Icons.lock,
+            title: "Password",
+            obscure: true,
+            state: _updatePasswordState,
+            controller: passwordController,
+          ),
+          ContinueButton(
+            title: S.of(context).entBtn,
+            state: emailState && passwordState,
+            callback: _onClick,
+          ),
+          SignBlock(title: S.of(context).orReg, screen: "/registration"),
+          const GoogleButton()
+        ],
+      )),
     );
   }
 }
