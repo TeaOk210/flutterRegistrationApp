@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_reg/ui/theme/Theme.dart';
+import 'package:flutter_reg/utils/ThemeNotifier.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
@@ -24,21 +26,22 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-@override
+  @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => LocaleProvider()),
+        ChangeNotifierProvider(create: (context) => ThemeNotifier())
       ],
       builder: (context, child) {
         final provider = Provider.of<LocaleProvider>(context);
+        final themeNotifier = Provider.of<ThemeNotifier>(context);
 
         return MaterialApp(
           title: 'Flutter Demo',
-          theme: ThemeData(
-            focusColor: Colors.grey,
-            useMaterial3: true,
-          ),
+          darkTheme: darkTheme,
+          theme: lightTheme,
+          themeMode: themeNotifier.currentTheme,
           debugShowCheckedModeBanner: false,
           localizationsDelegates: const [
             S.delegate,
@@ -54,6 +57,34 @@ class MyApp extends StatelessWidget {
             '/profile': (context) => const ProfileScreen(),
           },
           initialRoute: "/registration",
+        );
+      },
+    );
+  }
+}
+
+class ThemeSelection extends StatefulWidget {
+  const ThemeSelection({super.key});
+
+  @override
+  State<ThemeSelection> createState() => _ThemeSelectionState();
+}
+
+class _ThemeSelectionState extends State<ThemeSelection> {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<ThemeNotifier>(
+      builder: (context, themeNotifier, child) {
+        final theme = themeNotifier.currentTheme;
+
+        return IconButton(
+          icon: Icon(
+            theme == ThemeMode.dark ? Icons.wb_sunny : Icons.nightlight_round ,
+            color: Theme.of(context).iconTheme.color,
+          ),
+          onPressed: () {
+            themeNotifier.toggleTheme();
+          },
         );
       },
     );
@@ -135,7 +166,7 @@ class _InputFieldState extends State<InputField> {
     }
   }
 
-  String? _getHelper(String? text) {
+  String? _validation(String? text) {
     if (widget.title == "Email" && text != null) {
       return isValidEmail(text) ? null : S.of(context).emailReport;
     } else if (widget.title == "Password" && text != null) {
@@ -170,7 +201,7 @@ class _InputFieldState extends State<InputField> {
             name: "Input text",
             decoration: InputDecoration(
                 labelText: widget.title,
-                labelStyle: const TextStyle(fontSize: 24, color: Colors.grey),
+                labelStyle: Theme.of(context).textTheme.headlineMedium,
                 helperMaxLines: 2,
                 prefixIcon: Icon(widget.icon),
                 border: const OutlineInputBorder(
@@ -179,12 +210,12 @@ class _InputFieldState extends State<InputField> {
                 focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 3),
                     borderRadius: BorderRadius.all(Radius.circular(20.0)))),
-            style: const TextStyle(fontSize: 24),
-            cursorColor: Colors.black,
+            cursorColor: Theme.of(context).focusColor,
+            style: Theme.of(context).textTheme.headlineMedium,
             obscureText: widget.obscure,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             keyboardType: _getType(),
-            validator: _getHelper,
+            validator: _validation,
             controller: widget.controller,
             onChanged: _changeInput,
           ),
@@ -213,6 +244,15 @@ class ContinueButton extends StatelessWidget {
     }
   }
 
+  ButtonStyle getButtonStyle(BuildContext context) {
+    if (state) {
+      return Theme.of(context).elevatedButtonTheme.style!;
+    } else {
+      return ElevatedButton.styleFrom(
+          backgroundColor: Colors.grey, foregroundColor: Colors.white);
+    }
+  }
+
   onClick() {
     if (state) {
       callback();
@@ -228,16 +268,7 @@ class ContinueButton extends StatelessWidget {
         padding: const EdgeInsets.only(top: 50),
         child: ElevatedButton(
           onPressed: onClick,
-          style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(isEnabled()),
-            foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                (Set<MaterialState> states) {
-              if (states.contains(MaterialState.disabled)) {
-                return Colors.black;
-              }
-              return Colors.white;
-            }),
-          ),
+          style: getButtonStyle(context),
           child: Text(
             title,
             style: const TextStyle(fontSize: 20),
@@ -263,20 +294,20 @@ class SignBlock extends StatelessWidget {
             flex: 1,
             child: Padding(
                 padding: EdgeInsets.only(left: 10),
-                child: Divider(height: 100, color: Colors.grey, thickness: 2))),
+                child: Divider(height: 100))),
         TextButton(
             onPressed: () {
               Navigator.of(context).pushNamed(screen);
             },
             child: Text(
               title,
-              style: const TextStyle(fontSize: 16, color: Colors.grey),
+              style: Theme.of(context).textTheme.titleMedium,
             )),
         const Expanded(
             flex: 1,
             child: Padding(
                 padding: EdgeInsets.only(right: 10),
-                child: Divider(height: 100, color: Colors.grey, thickness: 2)))
+                child: Divider(height: 100)))
       ],
     );
   }
@@ -293,6 +324,7 @@ class GoogleButton extends StatelessWidget {
         // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacementNamed("/profile");
       } catch (e) {
+        // ignore: avoid_print
         print(e);
       }
     };
@@ -314,8 +346,9 @@ class GoogleButton extends StatelessWidget {
                 topLeft: Radius.circular(10),
                 bottomLeft: Radius.circular(10),
               ),
-              border: Border.all(width: 1, color: Colors.black),
-              color: Colors.white,
+              border:
+                  Border.all(width: 1, color: Theme.of(context).dividerColor),
+              color: Theme.of(context).primaryColor,
             ),
             child: Image.asset(
               'assets/images/google.png',
@@ -330,13 +363,14 @@ class GoogleButton extends StatelessWidget {
                 topRight: Radius.circular(10),
                 bottomRight: Radius.circular(10),
               ),
-              border: Border.all(width: 1, color: Colors.black),
-              color: Colors.white,
+              border:
+                  Border.all(width: 1, color: Theme.of(context).dividerColor),
+              color: Theme.of(context).primaryColor,
             ),
             child: Center(
               child: Text(
                 S.of(context).google,
-                style: const TextStyle(fontSize: 20),
+                style: Theme.of(context).textTheme.titleSmall,
               ),
             ),
           ),

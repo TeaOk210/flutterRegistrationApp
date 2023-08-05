@@ -22,7 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "email": MessageLookupByLibrary.simpleMessage("Ваша почта"),
+        "email": MessageLookupByLibrary.simpleMessage("Ваша почта "),
         "emailReport":
             MessageLookupByLibrary.simpleMessage("Некорректный формат email"),
         "emailStateFalse":
@@ -39,7 +39,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "orEnt": MessageLookupByLibrary.simpleMessage("или войти"),
         "orReg": MessageLookupByLibrary.simpleMessage("или зарегистрироваться"),
         "passwordReport": MessageLookupByLibrary.simpleMessage(
-            "Пароль должен содержать цифры и буквы, и быть не менее 8 символов"),
+            "Пароль должен включать цифры и буквы, и быть длиной \n не менее 8 символов."),
         "reg": MessageLookupByLibrary.simpleMessage("Регистрация"),
         "regBtn": MessageLookupByLibrary.simpleMessage("зарегистрироваться"),
         "registrationMailReport":

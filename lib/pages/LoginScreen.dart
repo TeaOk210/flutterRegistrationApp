@@ -52,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         actions: const [LanguageMenu()],
         automaticallyImplyLeading: false,
+        title: const ThemeSelection(),
       ),
       resizeToAvoidBottomInset: false,
       body: Center(
@@ -63,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.only(top: 50),
               child: Text(S.of(context).ent,
                   textDirection: TextDirection.ltr,
-                  style: const TextStyle(fontSize: 50))),
+                  style: Theme.of(context).textTheme.headlineLarge)),
           InputField(
             icon: Icons.email,
             title: "Email",
@@ -79,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
             controller: passwordController,
           ),
           Text(error ?? "",
-              style: const TextStyle(fontSize: 14, color: Colors.red)),
+              style: Theme.of(context).textTheme.headlineSmall),
           ContinueButton(
             title: S.of(context).entBtn,
             state: emailState && passwordState,

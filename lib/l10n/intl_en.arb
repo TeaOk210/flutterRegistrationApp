@@ -55,7 +55,7 @@
     "@emailReport" : {
         "description" : "mail field error"
     },
-    "passwordReport" : "The password must contain numbers and letters, and be at least 8 characters",
+    "passwordReport" : "The password must contain numbers and letters, and be \n at least 8 characters",
     "@passwordReport" : {
         "description" : "password field error"
     },

@@ -39,7 +39,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "orEnt": MessageLookupByLibrary.simpleMessage("or log in"),
         "orReg": MessageLookupByLibrary.simpleMessage("or sign up"),
         "passwordReport": MessageLookupByLibrary.simpleMessage(
-            "The password must contain numbers and letters, and be at least 8 characters"),
+            "The password must contain numbers and letters, and be \n at least 8 characters"),
         "reg": MessageLookupByLibrary.simpleMessage("Registration"),
         "regBtn": MessageLookupByLibrary.simpleMessage("sign up"),
         "registrationMailReport": MessageLookupByLibrary.simpleMessage(

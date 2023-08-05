@@ -23,14 +23,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   String? error;
 
-  @override
-  void initState() {
-    super.initState();
-    if (FirebaseAuth.instance.currentUser != null) {
-          Navigator.of(context).pushReplacementNamed("/profile");
-    }
-  }
-
   void _updateUsernameState(bool value) {
     setState(() {
       usernameState = value;
@@ -70,6 +62,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       appBar: AppBar(
         actions: const [LanguageMenu()],
         automaticallyImplyLeading: false,
+        title: const ThemeSelection(),
       ),
       resizeToAvoidBottomInset: false,
       body: Center(
@@ -81,7 +74,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               padding: const EdgeInsets.only(top: 50),
               child: Text(S.of(context).reg,
                   textDirection: TextDirection.ltr,
-                  style: const TextStyle(fontSize: 50))),
+                  style: Theme.of(context).textTheme.headlineLarge
+                  )),
           InputField(
               icon: Icons.email,
               title: "Email",
@@ -104,7 +98,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               state: _updatePasswordState,
               controller: passwordController),
           Text(error ?? "",
-              style: const TextStyle(fontSize: 14, color: Colors.red)),
+              style: Theme.of(context).textTheme.headlineSmall),
           ContinueButton(
             title: S.of(context).regBtn,
             state: emailState && passwordState,

@@ -16,9 +16,9 @@ class AuthRepository implements AuthMethods {
         email: email,
         password: password,
       );
-      final user = userCredential.user;
-      user!.updateDisplayName(username);
-      user.reload();
+      userCredential.user!
+        ..updateDisplayName(username)
+        ..reload();
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "email-already-in-use":
@@ -63,7 +63,7 @@ class AuthRepository implements AuthMethods {
             await googleSignInAccount.authentication;
         final AuthCredential credential = GoogleAuthProvider.credential(
             accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-        await auth.signInWithCredential(credential);;
+        await auth.signInWithCredential(credential);
       }
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(code: e.code, message: e.toString());

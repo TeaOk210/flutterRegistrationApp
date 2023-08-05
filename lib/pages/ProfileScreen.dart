@@ -84,6 +84,7 @@ class _PersonInfoState extends State<PersonInfo> {
       appBar: AppBar(
         actions: const [LanguageMenu()],
         automaticallyImplyLeading: false,
+        title: const ThemeSelection(),
       ),
       body: Center(
         child: Column(
@@ -91,17 +92,17 @@ class _PersonInfoState extends State<PersonInfo> {
           children: [
             Text(
               "your password is ${box.read("value")}",
-              style: const TextStyle(fontSize: 20, color: Colors.cyan),
+              style: Theme.of(context).textTheme.bodySmall,
             ),
             ClipOval(
                 child: Image.network(checkImage(),
                     height: 200, width: 200, fit: BoxFit.cover)),
             Text(user!.displayName.toString(),
-                style: const TextStyle(fontSize: 20)),
+                style: Theme.of(context).textTheme.titleSmall),
             RichText(
                 text: TextSpan(
                     text: S.of(context).email,
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
+                    style: Theme.of(context).textTheme.titleSmall,
                     children: [
                   TextSpan(
                       text: emailVerified(),
@@ -115,8 +116,7 @@ class _PersonInfoState extends State<PersonInfo> {
                         backgroundColor:
                             MaterialStatePropertyAll(buttonColor())),
                     child: Text(S.of(context).reportEmail,
-                        style: const TextStyle(
-                            fontSize: 15, color: Colors.white)))),
+                        style: Theme.of(context).textTheme.labelLarge))),
             Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: ElevatedButton(
@@ -124,8 +124,7 @@ class _PersonInfoState extends State<PersonInfo> {
                     style: const ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(Colors.cyan)),
                     child: Text(S.of(context).signOut,
-                        style: const TextStyle(
-                            fontSize: 15, color: Colors.white))))
+                        style: Theme.of(context).textTheme.labelLarge)))
           ],
         ),
       ),

@@ -190,10 +190,10 @@ class S {
     );
   }
 
-  /// `The password must contain numbers and letters, and be at least 8 characters`
+  /// `The password must contain numbers and letters, and be \n at least 8 characters`
   String get passwordReport {
     return Intl.message(
-      'The password must contain numbers and letters, and be at least 8 characters',
+      'The password must contain numbers and letters, and be \n at least 8 characters',
       name: 'passwordReport',
       desc: 'password field error',
       args: [],
