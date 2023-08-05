@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -56,7 +57,7 @@ class MyApp extends StatelessWidget {
             '/login': (context) => const LoginScreen(),
             '/profile': (context) => const ProfileScreen(),
           },
-          initialRoute: "/registration",
+          initialRoute: FirebaseAuth.instance.currentUser != null ? "/profile" : "/registration",
         );
       },
     );
