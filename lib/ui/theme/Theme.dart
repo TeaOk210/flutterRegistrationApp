@@ -11,7 +11,8 @@ final lightTheme = ThemeData(
       titleMedium: TextStyle(fontSize: 16, color: Colors.grey, fontWeight: FontWeight.normal),
       titleSmall: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.normal),
       bodySmall: TextStyle(fontSize: 20, color: Colors.cyan, fontWeight: FontWeight.normal),
-      labelLarge: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.normal)
+      labelLarge: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.normal),
+      bodyLarge: TextStyle(fontSize: 24, color: Colors.black, fontWeight: FontWeight.normal)
     ),
     primaryColor: Colors.white,
     dividerColor: Colors.black,
@@ -33,11 +34,12 @@ final darkTheme = ThemeData(
     textTheme: const TextTheme(
       headlineLarge: TextStyle(fontSize: 50, color: Colors.white, fontWeight: FontWeight.normal),
       headlineSmall: TextStyle(fontSize: 14, color: Colors.red, fontWeight: FontWeight.normal),
-      headlineMedium: TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.normal),
+      headlineMedium: TextStyle(fontSize: 24, color: Colors.grey, fontWeight: FontWeight.normal),
       titleMedium: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.normal),
       titleSmall: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.normal),
       bodySmall: TextStyle(fontSize: 20, color: Colors.cyan, fontWeight: FontWeight.normal),
-      labelLarge: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.normal)
+      labelLarge: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.normal),
+      bodyLarge: TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.normal)
     ),
     primaryColor: const Color.fromARGB(255, 68, 68, 68),
     dividerColor: Colors.white,

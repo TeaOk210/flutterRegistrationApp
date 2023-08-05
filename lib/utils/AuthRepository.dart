@@ -23,7 +23,7 @@ class AuthRepository implements AuthMethods {
       switch (e.code) {
         case "email-already-in-use":
           throw FirebaseAuthException(
-              code: e.code, message: S.current.language);
+              code: e.code, message: S.current.registrationMailReport);
       }
     } catch (e) {
       print(e);

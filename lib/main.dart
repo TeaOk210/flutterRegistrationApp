@@ -211,7 +211,7 @@ class _InputFieldState extends State<InputField> {
                     borderSide: BorderSide(color: Colors.grey, width: 3),
                     borderRadius: BorderRadius.all(Radius.circular(20.0)))),
             cursorColor: Theme.of(context).focusColor,
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: Theme.of(context).textTheme.bodyLarge,
             obscureText: widget.obscure,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             keyboardType: _getType(),

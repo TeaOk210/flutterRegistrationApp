@@ -45,7 +45,7 @@ class _PersonInfoState extends State<PersonInfo> {
     if (user!.photoURL != null) {
       return user!.photoURL.toString();
     } else {
-      return "https://sun9-10.userapi.com/impg/_4HPY2SUHnnMe7QjLrSRVSkDlPG9gh9CKYqltQ/OmI_xaiXTQg.jpg?size=604x604&quality=95&sign=ffd64cc67a1f0de321e2611b93339783&c_uniq_tag=IdQQGv52654nH_2mhz-7CQaCw1lEUEODAnubeI2jCHA&type=album";
+      return "https://w7.pngwing.com/pngs/313/542/png-transparent-business-organization-computer-software-tom-clancy-s-rainbow-six-siege-research-unknown-person.png";
     }
   }
 
